@@ -8,3 +8,14 @@ export async function fetchSeasons() {
 
   return years;
 }
+
+export async function fetchRaces(year: string) {
+  const res = await fetch(`https://api.openf1.org/v1/sessions?year=${year}`);
+
+  if (!res.ok) throw new Error("An error ocurred while fetching races");
+
+  const data = await res.json();
+  const races = [...new Set(data.map((s: any) => s.country_name))];
+
+  return races;
+}
