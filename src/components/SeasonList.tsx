@@ -1,23 +1,18 @@
-"use client";
-
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { fetchSeasons } from "../lib/openf1";
+import Link from "next/link";
 
-export default function SeasonsList() {
-  const [years, setYears] = useState<number[]>([]);
-
-  useEffect(() => {
-    fetchSeasons()
-      .then((data) => setYears(data.map(Number)))
-      .catch(console.error);
-  }, []);
+export default async function SeasonsList() {
+  const years = (await fetchSeasons()) as string[];
 
   return (
     <div className="p-4">
       <h1 className="text-xl font-bold mb-2">Available seasons:</h1>
       <ul className="list-disc ml-6">
         {years.map((year) => (
-          <li key={year}>{year}</li>
+          <Link href={`/seasons/${year}`} className="text-blue-500 hover:underline">
+            <li key={year}>{year}</li>
+          </Link>
         ))}
       </ul>
     </div>
