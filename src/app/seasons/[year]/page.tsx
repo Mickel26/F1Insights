@@ -7,9 +7,9 @@ export default async function Page({ params }: { params: Promise<{ year: string 
     console.log(races)
 
     return (
-        <div>
-            <h1>Races in {year}</h1>
-            <ul>
+        <div className="p-4">
+            <h1 className="text-xl font-bold mb-2">Races in {year}</h1>
+            <ul className="list-disc ml-6">
                 {races.map((race, index) => (
                     <li key={`${year}-${race}-${index}`}>{race}</li>
                 ))}
