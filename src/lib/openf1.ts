@@ -15,7 +15,12 @@ export async function fetchRaces(year: string) {
   if (!res.ok) throw new Error("An error ocurred while fetching races");
 
   const data = await res.json();
-  const races = [...new Set(data.map((s: any) => s.country_name))];
+
+  const races = Array.from(
+    new Map(
+      data.map((s: any) => [`${s.country_name}-${s.circuit_short_name}`, { country: s.country_name, track: s.circuit_short_name }])
+    ).values()
+  );
 
   return races;
 }
