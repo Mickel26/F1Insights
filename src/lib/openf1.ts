@@ -24,3 +24,19 @@ export async function fetchRaces(year: string) {
 
   return races;
 }
+
+export async function fetchSessions(year: string, track: string) {
+  const res = await fetch(`https://api.openf1.org/v1/sessions?year=${year}&circuit_short_name=${track}`);
+  
+  if (!res.ok) throw new Error("An error occurred while fetching sessions");
+
+  const data = await res.json();
+
+  const sessions = data.map((s: any) => ({
+    session_name: s.session_name,
+    date: s.date_start,
+    session_key: s.session_key
+  }));
+
+  return sessions;
+}
